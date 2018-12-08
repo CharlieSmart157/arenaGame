@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class ProjectileAbility : Ability {
 
@@ -8,16 +9,16 @@ public class ProjectileAbility : Ability {
     public int initialForce;
     public override void castAbility() {
         base.castAbility();
-        spawnMissile();
+        CmdSpawnMissile();
     }
 
-    void spawnMissile() {
+    [Command]
+    void CmdSpawnMissile() {
         //Create Projectile Entity
-        print(target.transform.position);
-        var projectile = Instantiate(projectileEntity) as GameObject;
-        projectile.transform.position = target.transform.position;
-        projectile.transform.rotation = target.transform.rotation;
+        var projectile = (GameObject)Instantiate(projectileEntity, target.transform.position, target.transform.rotation);
         projectile.GetComponent<Rigidbody>().velocity = target.transform.TransformDirection(Vector3.forward * initialForce);
+        NetworkServer.SpawnWithClientAuthority(projectile, connectionToClient);
+        
     }
 
 }

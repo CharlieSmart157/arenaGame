@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Ability : MonoBehaviour {
+public class Ability : NetworkBehaviour {
 
     public GameObject target;
     public int manaCost; //Maybe?

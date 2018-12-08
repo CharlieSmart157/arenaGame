@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class PlayerControllerScript : MonoBehaviour
+public class PlayerControllerScript : NetworkBehaviour
 {
 
     int xSpeed = 0;
@@ -10,12 +11,12 @@ public class PlayerControllerScript : MonoBehaviour
     public GameObject playerModel;
     public int mSpeed = 4;
     Rigidbody physicsBody;
-    public Camera camera;
+    public Camera playerCamera;
     int floorMask;                      // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
     float camRayLength = 100f;
     public GameObject cursorObject;
     public Ability[] abilities;
-   
+    public NetworkIdentity networkIdentity;
 
 
     private void Awake()
@@ -32,21 +33,27 @@ public class PlayerControllerScript : MonoBehaviour
         foreach (Ability item in abilities) {
             item.target = playerModel;
         }
+
+        if (isLocalPlayer) {
+            playerCamera.gameObject.SetActive(true);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        physicsBody.velocity = new Vector3(Input.GetAxis("Horizontal") * mSpeed, physicsBody.velocity.y, Input.GetAxis("Vertical") * mSpeed);
+        if (isLocalPlayer) { 
+            physicsBody.velocity = new Vector3(Input.GetAxis("Horizontal") * mSpeed, physicsBody.velocity.y, Input.GetAxis("Vertical") * mSpeed);
 
-        turn();
+            turn();
 
-        checkAbilityUse();
+            checkAbilityUse();
+        }
     }
 
      void turn(){
         // Create a ray from the mouse cursor on screen in the direction of the camera.
-        Ray camRay = camera.ScreenPointToRay(Input.mousePosition);
+        Ray camRay = playerCamera.ScreenPointToRay(Input.mousePosition);
 
         // Create a RaycastHit variable to store information about what was hit by the ray.
         RaycastHit floorHit;
@@ -74,11 +81,13 @@ public class PlayerControllerScript : MonoBehaviour
     void checkAbilityUse() {
 
         if (Input.GetButton("Fire2")) {
-            UseAbility(0);
+            useAbility(0);
         }
     }
-
-    void UseAbility(int index) {
+ 
+    void useAbility(int index) {
         abilities[index].tryToCast();
     }
+
+  
 }

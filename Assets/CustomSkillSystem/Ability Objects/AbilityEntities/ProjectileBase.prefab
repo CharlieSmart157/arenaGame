@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 4834836859367884}
   - component: {fileID: 114058239464040690}
   - component: {fileID: 54489697182780542}
+  - component: {fileID: 114084240528236618}
   m_Layer: 0
   m_Name: ProjectileBase
   m_TagString: Untagged
@@ -160,6 +161,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b269d83a991b04799d4973fc729fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114084240528236618
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1710564719298626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 178
+    i1: 60
+    i2: 64
+    i3: 207
+    i4: 12
+    i5: 14
+    i6: 75
+    i7: 164
+    i8: 139
+    i9: 234
+    i10: 74
+    i11: 95
+    i12: 69
+    i13: 169
+    i14: 223
+    i15: 152
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!198 &198125069601132422
 ParticleSystem:
   m_ObjectHideFlags: 1
