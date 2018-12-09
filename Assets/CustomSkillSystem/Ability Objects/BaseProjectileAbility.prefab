@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  owner: {fileID: 0}
   manaCost: 0
   cooldown: 0
   projectileEntity: {fileID: 1710564719298626, guid: b23c40cf0c0e4ba48bea4a5f45a9df98,

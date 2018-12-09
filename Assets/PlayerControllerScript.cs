@@ -15,9 +15,9 @@ public class PlayerControllerScript : NetworkBehaviour
     int floorMask;                      // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
     float camRayLength = 100f;
     public GameObject cursorObject;
-    public Ability[] abilities;
+    public GameObject[] abilities;
+    public List<GameObject> abilitiesDummy;
     public NetworkIdentity networkIdentity;
-
 
     private void Awake()
     {
@@ -30,12 +30,18 @@ public class PlayerControllerScript : NetworkBehaviour
         xSpeed = 0;
         zSpeed = 0;
         physicsBody = GetComponent<Rigidbody>();
-        foreach (Ability item in abilities) {
-            item.target = playerModel;
+        abilitiesDummy = new List<GameObject>();
+
+        foreach (GameObject item in abilities)
+        {
+            item.GetComponent<Ability>().target = playerModel;
+            item.GetComponent<Ability>().owner = this;
+            CmdSpawnAbility(item);
         }
 
         if (isLocalPlayer) {
-            playerCamera.gameObject.SetActive(true);
+            playerCamera.enabled = true;
+            cursorObject.SetActive(true);
         }
     }
 
@@ -86,8 +92,25 @@ public class PlayerControllerScript : NetworkBehaviour
     }
  
     void useAbility(int index) {
-        abilities[index].tryToCast();
+        abilitiesDummy[index].GetComponent<Ability>().tryToCast();
     }
 
-  
+    [Command]
+    void CmdSpawnAbility(GameObject item){
+        var dummy = (GameObject)Instantiate(item);
+        NetworkServer.SpawnWithClientAuthority(dummy, connectionToClient);
+    }
+
+    [ClientRpc]
+    public void RpcAddToAbilitiesDummy(NetworkInstanceId item) {
+        foreach(KeyValuePair<NetworkInstanceId, NetworkIdentity> entry in (ClientScene.objects)){
+            print(entry.Key + ": " + entry.Value);
+        }
+        
+        GameObject dummy = ClientScene.FindLocalObject(item);
+        abilitiesDummy.Add(dummy);
+    }
+
+
+
 }

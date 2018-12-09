@@ -28,7 +28,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1033319258489440
 GameObject:
   m_ObjectHideFlags: 1
@@ -233,7 +233,7 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1134625163633010}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -442,10 +442,9 @@ MonoBehaviour:
   playerCamera: {fileID: 20666746092586610}
   cursorObject: {fileID: 1012308474076150}
   abilities:
-  - {fileID: 114659261190335944, guid: 2302e94b798773c45be9824192fbd537, type: 2}
+  - {fileID: 1979730624363466, guid: 2302e94b798773c45be9824192fbd537, type: 2}
+  abilitiesDummy: []
   networkIdentity: {fileID: 114430584390492692}
-  projectileEntity: {fileID: 1710564719298626, guid: b23c40cf0c0e4ba48bea4a5f45a9df98,
-    type: 2}
 --- !u!114 &114973783045866544
 MonoBehaviour:
   m_ObjectHideFlags: 1
