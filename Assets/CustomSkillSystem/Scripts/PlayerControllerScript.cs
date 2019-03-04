@@ -15,9 +15,10 @@ public class PlayerControllerScript : NetworkBehaviour
     int floorMask;                      // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
     float camRayLength = 100f;
     public GameObject cursorObject;
-    public GameObject[] abilities;
+    public AbilityScriptable[] abilities;
     public List<GameObject> abilitiesDummy;
     public NetworkIdentity networkIdentity;
+    public AbilityCooldown abilityCooldown;
 
     private void Awake()
     {
@@ -32,11 +33,11 @@ public class PlayerControllerScript : NetworkBehaviour
         physicsBody = GetComponent<Rigidbody>();
         abilitiesDummy = new List<GameObject>();
 
-        foreach (GameObject item in abilities)
+        foreach (AbilityScriptable item in abilities)
         {
-            item.GetComponent<Ability>().target = playerModel;
-            item.GetComponent<Ability>().owner = this;
-            CmdSpawnAbility(item);
+            item.target = playerModel;
+            item.owner = this;
+          //  CmdSpawnAbility(item);
         }
 
         if (isLocalPlayer) {
@@ -85,12 +86,10 @@ public class PlayerControllerScript : NetworkBehaviour
     }
 
     void checkAbilityUse() {
-
-        if (Input.GetButton("Fire2")) {
-            useAbility(0);
-        }
+        abilityCooldown.cooldownUpdate();
     }
  
+    //old
     void useAbility(int index) {
         abilitiesDummy[index].GetComponent<Ability>().tryToCast();
     }
